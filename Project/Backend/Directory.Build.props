@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup Condition="'$(XTRENA_CONTAINER)' == '1'">
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory).container-build/$(MSBuildProjectName)/obj/</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(MSBuildThisFileDirectory).container-build/$(MSBuildProjectName)/obj/</MSBuildProjectExtensionsPath>
+    <BaseOutputPath>$(MSBuildThisFileDirectory).container-build/$(MSBuildProjectName)/bin/</BaseOutputPath>
+    <!-- ★ BaseIntermediateOutputPath වෙනස් වුණාම SDK exclude එකත් ඒකට මාරු වෙනවා →
+         පරණ obj\** folder එක exclude වෙන්නේ නෑ → **/*.cs glob එක එකෙන් stale
+         AssemblyInfo.cs ගන්නවා → CS0579 Duplicate attribute errors.
+         ඒ නිසා පරණ පැත්ත අතින්ම exclude කරනවා. -->
+    <DefaultItemExcludes>$(DefaultItemExcludes);obj\**;bin\**</DefaultItemExcludes>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/tests/">
+    <Project Path="tests/Xtrena.IntegrationTests/Xtrena.IntegrationTests.csproj" />
+    <Project Path="tests/Xtrena.UnitTests/Xtrena.UnitTests.csproj" />
+  </Folder>
+  <Project Path="Xtrena.Api/Xtrena.Api.csproj" />
+</Solution>

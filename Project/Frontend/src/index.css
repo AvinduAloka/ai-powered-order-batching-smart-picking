@@ -1,0 +1,120 @@
+@import 'tailwindcss';
+
+/*
+ * Tailwind CSS 4 is CSS-first: there is no tailwind.config.ts. Design tokens are
+ * declared here as CSS custom properties inside @theme, which is what generates
+ * the matching utilities (bg-brand-500, text-shelf, animate-fade-in, ...).
+ *
+ * The colour ramp below is the single source of truth for status colour across
+ * all 30 screens: green = OK, amber = attention, red = fault, violet = external.
+ * Keeping it here is what makes W-08, W-10 and W-26 look like one application.
+ */
+@theme {
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-500: #2563eb;
+  --color-brand-600: #1d4ed8;
+  --color-brand-700: #1e40af;
+  --color-brand-900: #1e3a8a;
+
+  --color-ok-50: #f0fdf4;
+  --color-ok-500: #16a34a;
+  --color-ok-700: #15803d;
+
+  --color-warn-50: #fffbeb;
+  --color-warn-500: #d97706;
+  --color-warn-700: #b45309;
+
+  --color-fault-50: #fef2f2;
+  --color-fault-500: #dc2626;
+  --color-fault-700: #b91c1c;
+
+  --color-ext-50: #f5f3ff;
+  --color-ext-500: #7c3aed;
+  --color-ext-700: #6d28d9;
+
+  --font-sans: Inter, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* WAREHOUSE-1: shelf labels are read at arm's length. */
+  --text-shelf: 1.5rem;
+  --text-shelf--line-height: 2rem;
+  --text-shelf--font-weight: 700;
+
+  --animate-fade-in: fade-in 120ms ease-out;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-slate-100 text-slate-900 antialiased;
+    font-family: var(--font-sans);
+  }
+
+  /* A visible focus ring is mandatory on every interactive element: this is a
+     data-entry application used with a keyboard on a warehouse floor. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-500;
+  }
+
+  /* Keyboard users must be able to see where they are inside a long table. */
+  tr:focus-within {
+    @apply bg-brand-50;
+  }
+}
+
+@layer components {
+  /* Screen-reader-only text that still reaches the accessibility tree. */
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Print stylesheet for packing labels and seals (W-24). */
+  @media print {
+    body {
+      @apply bg-white text-black;
+    }
+    .no-print {
+      display: none !important;
+    }
+    .print-only {
+      display: block !important;
+    }
+    @page {
+      margin: 12mm;
+    }
+  }
+}
+
+.print-only {
+  display: none;
+}
